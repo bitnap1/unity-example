@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BirdJump : MonoBehaviour
 {
@@ -18,7 +19,16 @@ public class BirdJump : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            GetComponent<AudioSource>().Play();
             rb.velocity = Vector2.up * jumpPower;            
         }
+    }
+
+    // collider들 끼리 부딪혔을때 아래 함수 실행
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (Score.score > Score.bestScore) {
+            Score.bestScore = Score.score;
+        }
+        SceneManager.LoadScene("GameOverScene");
     }
 }
